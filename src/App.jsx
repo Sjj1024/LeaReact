@@ -1,61 +1,24 @@
-import './App.css'
-import React, { Component } from 'react'
-import { Input, Table } from 'antd'
+import React from 'react'
+import { BrowserRouter, Link, Routes, Route } from 'react-router-dom'
+import About from './components/About'
+import Layout from './layout'
+import Files from './components/Files'
+import Share from "./components/Share"
 
-const { Search } = Input
-
-export default class App extends Component {
-    state = {
-        todos: [
-            { id: 1, name: '吃饭', isDone: false },
-            { id: 2, name: '睡觉', isDone: true },
-            { id: 3, name: '写代码啊', isDone: false },
-        ],
-        columns: [
-            {
-                title: '姓名',
-                dataIndex: 'name',
-                key: 'name',
-            },
-            {
-                title: '年纪',
-                dataIndex: 'age',
-                key: 'age',
-            },
-            {
-                title: '地址',
-                dataIndex: 'address',
-                key: 'address',
-            },
-        ],
-        data: [],
-    }
-
-    addTodos = (todo) => {
-        console.log('添加内容', todo)
-        const newTodos = [todo, ...this.state.todos]
-        this.setState({ todos: newTodos })
-    }
-
-    onSearch = (value) => console.log(value)
-
-    render() {
-        return (
-            <div className="App">
-                <div className="main-box">
-                    <Search
-                        placeholder="input search text"
-                        allowClear
-                        enterButton="Search"
-                        size="large"
-                        onSearch={this.onSearch}
-                    />
-                    <Table
-                        columns={this.state.columns}
-                        dataSource={this.state.data}
-                    />
-                </div>
-            </div>
-        )
-    }
+export default function App() {
+    return (
+        <BrowserRouter>
+            <Link to="/">商品页</Link>
+            <Link to="/about">关于页</Link>
+            <br />
+            <Routes>
+                <Route path="/" element={<Layout></Layout>}>
+                    {/* 定义二级路由结构 */}
+                    <Route path="files" element={<Files></Files>}></Route>
+                    <Route path="share" element={<Share></Share>}></Route>
+                </Route>
+                <Route path="/about" element={<About></About>}></Route>
+            </Routes>
+        </BrowserRouter>
+    )
 }
